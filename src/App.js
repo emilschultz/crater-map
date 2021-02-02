@@ -1,10 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Cosmic from 'cosmicjs';
+import Mapbox from 'mapbox-gl';
+
 
 function App() {
 
   const [pageData, setPageData] = useState(null);
 
+  let map;
+  const mapElement = useRef(null)
+  Mapbox.accessToken = process.env.MAPBOX_API_KEY;
+
+    // COSMIC
     useEffect(() => {
       const client = new Cosmic()
       const bucket = client.bucket({
@@ -21,6 +28,14 @@ function App() {
       })
       .catch(error => {
         console.log(error)
+      })
+    }, [])
+
+    // MAPBOX
+    useEffect(() => {
+      map = new Mapbox.Map({
+        container: mapElement.current,
+        style: 'mapbox://styles/mapbox/streets-v11'
       })
     }, [])
 
@@ -43,6 +58,7 @@ function App() {
   return (
     <>
       {(pageData === null) ? renderSkeleton() : renderPage()}
+      <div style={{height: '500px'}} ref={mapElement}></div>
     </>
   )
 };
