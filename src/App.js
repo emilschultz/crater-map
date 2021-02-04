@@ -1,35 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cosmic from 'cosmicjs';
 import Mapbox from 'mapbox-gl';
-import Plot from 'react-plotly.js';
-
-// COMPONENTS
+// COMPONENTS IMPORT
 import SkeletonComponent from './components/SkeletonComponent'
+import Chart from './components/Chart';
+import GlobalStyle from './components/GlobalStyle/index';
+// STYKES IMPORT
+
+
+
+
+let map = null;
+
 
 
 function App() {
 
   const [pageData, setPageData] = useState(null);
-  const [chartState, setChartState] = useState({
-    data: [{
-      x: [1, 2, 3],
-      y: [2, 6, 4],
-      type: 'scatter',
-      mode: 'lines+markers',
-      marker: {color: 'blue'}
-    }],
-    layout: {
-      width: 800,
-      height: 400,
-      title: 'Diagram'
-    }, 
-    frames: [],
-    config: {}
-  })
 
-  let map = null;
   const mapElement = useRef(null)
   Mapbox.accessToken = process.env.MAPBOX_API_KEY;
+
+// --------------------------------------------------------------------------------
 
     // COSMIC
     useEffect(() => {
@@ -45,23 +37,149 @@ function App() {
       })
       .then(data => {
         setPageData(data.object);
+        console.log(data)
       })
       .catch(error => {
         console.log(error)
       })
     }, [])
 
+// --------------------------------------------------------------------------------
+
     // MAPBOX
     useEffect(() => {
       map = new Mapbox.Map({
         container: mapElement.current,
-        style: 'mapbox://styles/mapbox/light-v10',
-        center: [12.567707560916299, 55.68859077933342],
-        zoom: 13
+        style: 'mapbox://styles/mapbox/satellite-v9',
+        center: [10.13980512713666, 53.39893116868396],
+        zoom: 3,
+        pitch: 45,
       })
+      
+      // CONTROLS (FULLSCREEN & NAVIGATION)
+      map.addControl(new Mapbox.FullscreenControl());
+      map.addControl(new Mapbox.NavigationControl());
+
+      // CRATER MARKERS
+
+      // BERRINGER CRATER
+      const berringerMarker = new Mapbox.Marker(event)
+        berringerMarker.setLngLat([-111.02226922824839, 35.028046414736714])
+        berringerMarker.addTo(map)
+    
+
+      
+
+      // WOLF CREEK CRATER
+      const wolfCreekMarker = new Mapbox.Marker(event)
+      wolfCreekMarker.setLngLat([127.7955367736068, -19.171854725200237])
+      wolfCreekMarker.addTo(map)
+
+      // AMGUID CRATER
+      const amguidMarker = new Mapbox.Marker(event)
+      amguidMarker.setLngLat([4.395014134448849, 26.087573417980202])
+      amguidMarker.addTo(map)
+
+      // PINGUALUIT CRATER
+      const pingualuiMarker = new Mapbox.Marker(event)
+      pingualuiMarker.setLngLat([-73.65996457312208, 61.27817154641245])
+      pingualuiMarker.addTo(map)
+
+      // KAALI CRATER
+      const kaaliMarker = new Mapbox.Marker(event)
+      kaaliMarker.setLngLat([22.669319690218423, 58.372753194660284])
+      kaaliMarker.addTo(map)
+      
+    
+
+      // 3D LAYER
+      map.on('load', function () {
+        map.addSource('mapbox-dem', {
+        'type': 'raster-dem',
+        'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
+        'tileSize': 1024,
+        'maxzoom': 14
+        });
+        // TERRAIN LAYER
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2.2 });
+         
+        // SKY LAYER
+        map.addLayer({
+        'id': 'sky',
+        'type': 'sky',
+        'paint': {
+        'sky-type': 'atmosphere',
+        'sky-atmosphere-sun': [0.0, 0.0],
+        'sky-atmosphere-sun-intensity': 15
+        }
+        });
+      });
+        
     }, [pageData])
 
+// --------------------------------------------------------------------------------
+
+
+ 
+
     
+
+
+// --------------------------------------------------------------------------------
+    
+  // FLYTO CRATERS
+
+  const flyToBerringer = () => {
+    map.flyTo({
+      center: [-111.02226922824839, 35.028046414736714],
+      zoom: 15,
+      speed: 0.6,
+      curve: 1.5,
+      essential: true
+    })
+  }
+
+  const flyToWolfCreek = () => {
+    map.flyTo({
+      center: [127.7955367736068, -19.171854725200237],
+      zoom: 15,
+      speed: 0.6,
+      curve: 1.5,
+      essential: true
+    })
+  }
+
+  const flyToAmguid = () => {
+    map.flyTo({
+      center: [4.395014134448849, 26.087573417980202],
+      zoom: 16,
+      speed: 0.6,
+      curve: 1.5,
+      essential: true
+    })
+  }
+
+  const flyToPingualuit = () => {
+    map.flyTo({
+      center: [-73.65996457312208, 61.27817154641245],
+      zoom: 13,
+      speed: 0.6,
+      curve: 1.5,
+      essential: true 
+    })
+  }
+
+  const flyToKaali = () => {
+    map.flyTo({
+      center: [22.669319690218423, 58.372753194660284],
+      zoom: 16,
+      speed: 0.6,
+      curve: 1.5,
+      essential: true
+    })
+  }
+
+// --------------------------------------------------------------------------------
 
   const renderSkeleton = () => {
     return(
@@ -71,28 +189,27 @@ function App() {
   
   const renderPage = () => {
     return(  
-      <main>
+      <>
+        <GlobalStyle as="main"/>
         <h1>{pageData.title}</h1>
         <div dangerouslySetInnerHTML={{__html: pageData.content}} />
-        <Plot
-          data={chartState.data}
-          layout={chartState.layout}
-          frames={chartState.frames}
-          config={chartState.config}
-          onInitialized={(figure) => setChartState(figure)}
-          onUpdate={(figure) => setChartState(figure)}
-        />
-      </main>
+        <button onClick={flyToBerringer}>Berringer Crater</button>
+        <button onClick={flyToWolfCreek}>Wolf Creek Crater</button>
+        <button onClick={flyToAmguid}>Amguid Crater</button>
+        <button onClick={flyToPingualuit}>Pingualuit Crater</button>
+        <button onClick={flyToKaali}>Kaali Crater</button>
+      </>
     ) 
   }
 
-
   return (
     <>
+      <GlobalStyle/>
       {(pageData === null) ? renderSkeleton() : renderPage()}
-      <div style={{height: '84vh'}} ref={mapElement}></div>
+      <div style={{height: '84%'}} ref={mapElement}></div>
+      <Chart />
     </>
   )
-};
+}
 
 export default App;
