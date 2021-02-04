@@ -4,21 +4,24 @@ import Mapbox from 'mapbox-gl';
 // COMPONENTS IMPORT
 import SkeletonComponent from './components/SkeletonComponent'
 import Chart from './components/Chart';
+import GlobalStyle from './components/GlobalStyle/index';
+// STYKES IMPORT
 
-// export const GeoJson = {
-//   'type': 'FeatureCollection',
-//   'features': [
 
-//   ]
-// }
+
+
+let map = null;
+
+
 
 function App() {
 
   const [pageData, setPageData] = useState(null);
 
-  let map = null;
   const mapElement = useRef(null)
   Mapbox.accessToken = process.env.MAPBOX_API_KEY;
+
+// --------------------------------------------------------------------------------
 
     // COSMIC
     useEffect(() => {
@@ -34,11 +37,14 @@ function App() {
       })
       .then(data => {
         setPageData(data.object);
+        console.log(data)
       })
       .catch(error => {
         console.log(error)
       })
     }, [])
+
+// --------------------------------------------------------------------------------
 
     // MAPBOX
     useEffect(() => {
@@ -58,8 +64,11 @@ function App() {
 
       // BERRINGER CRATER
       const berringerMarker = new Mapbox.Marker(event)
-      berringerMarker.setLngLat([-111.02226922824839, 35.028046414736714])
-      berringerMarker.addTo(map)
+        berringerMarker.setLngLat([-111.02226922824839, 35.028046414736714])
+        berringerMarker.addTo(map)
+    
+
+      
 
       // WOLF CREEK CRATER
       const wolfCreekMarker = new Mapbox.Marker(event)
@@ -80,10 +89,8 @@ function App() {
       const kaaliMarker = new Mapbox.Marker(event)
       kaaliMarker.setLngLat([22.669319690218423, 58.372753194660284])
       kaaliMarker.addTo(map)
-    
-
-
       
+    
 
       // 3D LAYER
       map.on('load', function () {
@@ -93,10 +100,10 @@ function App() {
         'tileSize': 1024,
         'maxzoom': 14
         });
-        // add the DEM source as a terrain layer with exaggerated height
+        // TERRAIN LAYER
         map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2.2 });
          
-        // add a sky layer that will show when the map is highly pitched
+        // SKY LAYER
         map.addLayer({
         'id': 'sky',
         'type': 'sky',
@@ -106,32 +113,21 @@ function App() {
         'sky-atmosphere-sun-intensity': 15
         }
         });
-        });
-
+      });
         
     }, [pageData])
 
 // --------------------------------------------------------------------------------
 
-const customMarker = () => {
-  let el = document.createElement('div');
-  el.style.display = 'block';
-  el.style.width = '40px';
-  el.style.height = '40px';
-  el.style.backgroundImage = 'url("https://images.unsplash.com/photo-1611602132416-da2045990f76?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80")';
-  el.style.backgroundSize = '40px 40px';
-}
+
+ 
+
+    
 
 
-
-
-
-
-
-
-
-
-    // FLYTO CRATERS
+// --------------------------------------------------------------------------------
+    
+  // FLYTO CRATERS
 
   const flyToBerringer = () => {
     map.flyTo({
@@ -193,7 +189,8 @@ const customMarker = () => {
   
   const renderPage = () => {
     return(  
-      <main>
+      <>
+        <GlobalStyle as="main"/>
         <h1>{pageData.title}</h1>
         <div dangerouslySetInnerHTML={{__html: pageData.content}} />
         <button onClick={flyToBerringer}>Berringer Crater</button>
@@ -201,17 +198,15 @@ const customMarker = () => {
         <button onClick={flyToAmguid}>Amguid Crater</button>
         <button onClick={flyToPingualuit}>Pingualuit Crater</button>
         <button onClick={flyToKaali}>Kaali Crater</button>
-
-
-        
-      </main>
+      </>
     ) 
   }
 
   return (
     <>
+      <GlobalStyle/>
       {(pageData === null) ? renderSkeleton() : renderPage()}
-      <div style={{height: '84vh'}} ref={mapElement}></div>
+      <div style={{height: '84%'}} ref={mapElement}></div>
       <Chart />
     </>
   )
