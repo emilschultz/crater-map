@@ -8,8 +8,8 @@ const TitleSection = styled.section`
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: #EDEBE3;
-  color: #FF0000;
+  background-color: #000000;
+  color: #EDEBE3;
 
   h1 {
     font-size: 2rem;
@@ -22,13 +22,8 @@ const TitleSection = styled.section`
   }
 
   a {
-    font-size: 4rem
+    font-size: 2rem
   }
-  /* img {
-    width: 2rem;
-    margin-top: 8rem
-  } */
-  
 `;
 
 export default TitleSection;
