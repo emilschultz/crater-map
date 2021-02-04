@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Cosmic from 'cosmicjs';
 // COMPONENTS IMPORT
-import SkeletonComponent from './components/SkeletonComponent'
+import SkeletonComponent from '../../components/SkeletonComponent'
 // STYLES IMPORT
-import GlobalStyle from './components/GlobalStyle/index';
-import TitleSection from './components/TitleSectionStyle/index';
+import GlobalStyle from '../../components/GlobalStyle';
+import TitleSection from '../../components/TitleSection';
 
 function HomeContainer() {
 

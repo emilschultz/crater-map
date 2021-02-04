@@ -9,8 +9,8 @@ const MapWrapper = styled.div`
   background-color: #EDEBE3;
 
   div {
-    -webkit-box-shadow: 0px 4px 15px 3px rgba(0,0,0,0.2); 
-    box-shadow: 0px 4px 50px 3px rgba(0,0,0,0.2);  
+    border-radius: 1rem;
+    box-shadow: 0px 4px 30px 3px rgba(0,0,0,0.2);  
     }
 `;
 
