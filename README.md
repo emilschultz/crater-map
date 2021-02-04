@@ -1,4 +1,4 @@
-# react-starter
+# Vegar Norman react-starter
 
 Et enkelt og greit starterprosjekt for å lage React-apper uten å bruke create-react-app. Gir deg mer oversikt og kontroll over hva som faktisk skjer i prosessen når vi lager React-apper, og lar deg styre byggeprosessen i Webpack i større grad.
 
