@@ -1,18 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
+
 import Cosmic from 'cosmicjs';
 import Mapbox from 'mapbox-gl';
+
 // COMPONENTS IMPORT
 import SkeletonComponent from './components/SkeletonComponent'
 import Chart from './components/Chart';
+
+// CONTAINERS IMPORT
+import HomeContainer from './containers/HomeContainer';
+
+// STYLES IMPORT
 import GlobalStyle from './components/GlobalStyle/index';
-// STYKES IMPORT
-
-
-
+// import TitleSection from './components/TitleSectionStyle/index';
+import MapWrapper from './components/MapWrapper/index';
 
 let map = null;
-
-
 
 function App() {
 
@@ -119,12 +128,6 @@ function App() {
 
 // --------------------------------------------------------------------------------
 
-
- 
-
-    
-
-
 // --------------------------------------------------------------------------------
     
   // FLYTO CRATERS
@@ -188,16 +191,30 @@ function App() {
   }
   
   const renderPage = () => {
-    return(  
+    return(
       <>
-        <GlobalStyle as="main"/>
-        <h1>{pageData.title}</h1>
-        <div dangerouslySetInnerHTML={{__html: pageData.content}} />
-        <button onClick={flyToBerringer}>Berringer Crater</button>
-        <button onClick={flyToWolfCreek}>Wolf Creek Crater</button>
-        <button onClick={flyToAmguid}>Amguid Crater</button>
-        <button onClick={flyToPingualuit}>Pingualuit Crater</button>
-        <button onClick={flyToKaali}>Kaali Crater</button>
+          <Router>
+            <Switch>
+              <Route path="/" >
+                <HomeContainer />
+            </Switch>
+          </Router>
+       
+
+
+        {/* <TitleSection>
+          <h1>{pageData.title}</h1>
+          <div dangerouslySetInnerHTML={{__html: pageData.content}} />
+          <a>👇</a>
+        </TitleSection> */}
+
+        {/* <container>
+          <button onClick={flyToBerringer}>Berringer Crater</button>
+          <button onClick={flyToWolfCreek}>Wolf Creek Crater</button>
+          <button onClick={flyToAmguid}>Amguid Crater</button>
+          <button onClick={flyToPingualuit}>Pingualuit Crater</button>
+          <button onClick={flyToKaali}>Kaali Crater</button>
+        </container> */}
       </>
     ) 
   }
@@ -206,7 +223,9 @@ function App() {
     <>
       <GlobalStyle/>
       {(pageData === null) ? renderSkeleton() : renderPage()}
-      <div style={{height: '84%'}} ref={mapElement}></div>
+      <MapWrapper>
+        <div style={{height: '84%', width: '95%'}} ref={mapElement}></div>
+      </MapWrapper>
       <Chart />
     </>
   )
