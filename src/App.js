@@ -57,15 +57,15 @@ function App() {
     // MAPBOX
     useEffect(() => {
       map = new Mapbox.Map({
+        attributionControl: false,
         container: mapElement.current,
         style: 'mapbox://styles/mapbox/satellite-v9',
         center: [10.13980512713666, 53.39893116868396],
         zoom: 3,
-        pitch: 45,
+        pitch: 40,
       })
       
       // CONTROLS (FULLSCREEN & NAVIGATION)
-      map.addControl(new Mapbox.FullscreenControl());
       map.addControl(new Mapbox.NavigationControl());
 
       // CRATER MARKERS
@@ -180,7 +180,7 @@ function App() {
 
   const zoomOut = () => {
     map.flyTo({
-      center: [22.710411498987174, 0.11347531408414456],
+      center: [22.710411498987174, -0.91347531408414456],
       zoom: 1.75,
       speed: 0.8
     })
@@ -227,15 +227,15 @@ function App() {
       <GlobalStyle/>
       {(pageData === null) ? renderSkeleton() : renderPage()}
       <MapWrapper>
-      <container>
-          <button onClick={flyToBerringer}>Berringer Crater</button>
-          <button onClick={flyToWolfCreek}>Wolf Creek Crater</button>
-          <button onClick={flyToAmguid}>Amguid Crater</button>
-          <button onClick={flyToPingualuit}>Pingualuit Crater</button>
-          <button onClick={flyToKaali}>Kaali Crater</button>
-          <button onClick={zoomOut}>Overview</button>
-        </container>
-        <div style={{height: '84%', width: '95%'}} ref={mapElement}></div>
+        <section>
+          <button onClick={flyToBerringer} className="navButtons">Berringer Crater</button>
+          <button onClick={flyToWolfCreek} className="navButtons">Wolf Creek Crater</button>
+          <button onClick={flyToAmguid} className="navButtons">Amguid Crater</button>
+          <button onClick={flyToPingualuit} className="navButtons">Pingualuit Crater</button>
+          <button onClick={flyToKaali} className="navButtons">Kaali Crater</button>
+          <button onClick={zoomOut} className="navButtons">Zoom out</button>
+        </section>
+        <div style={{height: '70%', width: '90%'}} ref={mapElement}></div>
       </MapWrapper>
       <Chart />
     </>
