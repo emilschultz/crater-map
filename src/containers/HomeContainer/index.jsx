@@ -47,7 +47,7 @@ function HomeContainer() {
         <TitleSection>
           <h1>{pageData.title}</h1>
           <div dangerouslySetInnerHTML={{__html: pageData.content}} />
-          <a>👇</a>
+          <a>☄️</a>
         </TitleSection>
       </>
     ) 
