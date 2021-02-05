@@ -15,6 +15,7 @@ import Chart from './components/Chart';
 
 // CONTAINERS IMPORT
 import HomeContainer from './containers/HomeContainer';
+import MapContainer from './containers/MapContainer'
 
 // STYLES IMPORT
 import GlobalStyle from './components/GlobalStyle/index';
@@ -41,21 +42,24 @@ function App() {
 
       bucket.getObject({
         slug: 'crater-map',
-        props: 'slug,title,content'
+        props: 'slug,title,content,metadata'
       })
       .then(data => {
-        setPageData(data.object);
         console.log(data)
+        setPageData(data.object);
       })
       .catch(error => {
         console.log(error)
       })
     }, [])
 
+    
+
 // --------------------------------------------------------------------------------
 
     // MAPBOX
     useEffect(() => {
+      if(pageData !== null) {
       map = new Mapbox.Map({
         attributionControl: false,
         container: mapElement.current,
@@ -64,6 +68,7 @@ function App() {
         zoom: 3,
         pitch: 40,
       })
+
       
       // CONTROLS (FULLSCREEN & NAVIGATION)
       map.addControl(new Mapbox.NavigationControl());
@@ -106,7 +111,7 @@ function App() {
         'maxzoom': 14
         });
         // TERRAIN LAYER
-        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2.2 });
+        map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2 });
          
         // SKY LAYER
         map.addLayer({
@@ -120,7 +125,8 @@ function App() {
         });
       });
         
-    }, [pageData])
+    }
+  }, [pageData])
 
 // --------------------------------------------------------------------------------
 
@@ -204,11 +210,11 @@ function App() {
                   <HomeContainer />
                 </Route>
                 <Route path="/">
-                  <App />
+                  <MapWrapper />
                 </Route>
               </Switch>
             </Router>
-          
+
         {/* <container>
           <button onClick={flyToBerringer}>Berringer Crater</button>
           <button onClick={flyToWolfCreek}>Wolf Creek Crater</button>
@@ -217,16 +223,17 @@ function App() {
           <button onClick={flyToKaali}>Kaali Crater</button>
           <button onClick={zoomOut}>Overview</button>
         </container> */}
-        
       </>
     ) 
   }
 
   return (
     <>
+      <MapContainer />
       <GlobalStyle/>
       {(pageData === null) ? renderSkeleton() : renderPage()}
       <MapWrapper>
+        <h1>CRATERS</h1>
         <section>
           <button onClick={flyToBerringer} className="navButtons">Berringer Crater</button>
           <button onClick={flyToWolfCreek} className="navButtons">Wolf Creek Crater</button>

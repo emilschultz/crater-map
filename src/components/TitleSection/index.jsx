@@ -9,7 +9,7 @@ const TitleSection = styled.section`
   justify-content: center;
   text-align: center;
   background-color: #193620;
-  color: #f2361c;
+  color: #ffffff;
   font-family: 'Rakkas', cursive;
 
   h1 {
