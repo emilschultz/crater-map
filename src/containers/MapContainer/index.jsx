@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Cosmic from 'cosmicjs';
 import Mapbox from 'mapbox-gl';
 
-import SkeletonComponent from '../../components/SkeletonComponent'
+import SkeletonComponent from '../../components/SkeletonComponent';
+import MapWrapper from '../../components/MapWrapper';
 
 let map = null;
 
@@ -83,7 +84,9 @@ function MapContainer() {
   const renderPage = () => {
     return(
       <>
-        <h1>Hej</h1>
+        <MapWrapper />
+        <h1>{pageData.title}</h1>
+        <div style={{height: '70%', width: '90%'}} ref={mapElement}></div>
       </>
     )
   }
