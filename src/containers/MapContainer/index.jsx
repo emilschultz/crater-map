@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cosmic from 'cosmicjs';
-import Mapbox from 'mapbox-gl';
+import Mapbox, { Popup } from 'mapbox-gl';
 
 import SkeletonComponent from '../../components/SkeletonComponent';
 import MapWrapper from '../../components/MapWrapper';
@@ -50,17 +50,17 @@ function MapContainer() {
     // RENDER MARKERS FROM COSMIC METADATA
     pageData.objects.map( marker => {
 
-      let Popup = document.createElement('div')
-      Popup.style.width = '20px';
-      Popup.style.height = '30px';
-      Popup.style.backgroundColor = 'yellow';
+      // let popup = document.createElement('div');
+      // popup.className = 'popdenop';
+      // newMarker.style.width = '20px';
+      // newMarker.style.height = '30px';
+      // newMarker.style.backgroundColor = 'yellow';
 
       const longitude = marker.metadata.longitude
       const latitude = marker.metadata.latitude
       const newMarker = new Mapbox.Marker()
-        newMarker.setLngLat([longitude, latitude])
-        newMarker.setPopup(new Mapbox.Popup)
-        newMarker.addTo(map)
+        .setLngLat([longitude, latitude])
+        .addTo(map)
     })
 
     // RENDER POP UP ON CLICK

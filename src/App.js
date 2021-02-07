@@ -4,7 +4,7 @@ import GlobalStyle from './components/GlobalStyle/index';
 
 import HomeContainer from './containers/HomeContainer';
 import MapSectionContainer from './containers/MapSectionContainer';
-// import ChartsContainer from '';
+import ChartsContainer from './containers/ChartsContainer';
 
 import {
   BrowserRouter as Router,
@@ -21,6 +21,7 @@ function App() {
           <Route path="/">
             <HomeContainer />
             <MapSectionContainer />
+            <ChartsContainer />
           </Route>
         </Switch>
       </Router>
