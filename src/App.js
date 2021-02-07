@@ -3,7 +3,7 @@ import React from 'react';
 import GlobalStyle from './components/GlobalStyle/index';
 
 import HomeContainer from './containers/HomeContainer';
-import MapContainer from '';
+import MapSectionContainer from './containers/MapSectionContainer';
 // import ChartsContainer from '';
 
 import {
@@ -18,9 +18,10 @@ function App() {
       <GlobalStyle />
       <Router>
         <Switch>
-          <Route path="/" component={HomeContainer} />
-          <Route path="/" component={MapContainer} />
-          {/* <Route path="/" component={ChartsContainer} /> */}
+          <Route path="/">
+            <HomeContainer />
+            <MapSectionContainer />
+          </Route>
         </Switch>
       </Router>
     </>

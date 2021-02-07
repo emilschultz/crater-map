@@ -54,7 +54,7 @@ function HomeContainer() {
 
   return (
     <>
-      <GlobalStyle/>
+      {/* <GlobalStyle/> */}
       {(pageData === null) ? renderSkeleton() : renderPage()}
     </>
   )

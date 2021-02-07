@@ -10,7 +10,7 @@ let map = null;
 function MapContainer() {
   const [pageData, setPageData] = useState(null);
 
-  // MARKERS/CRATERS FROM COSMIC
+  // MARKERS FROM COSMIC
   useEffect(() => {
     const client = new Cosmic();
     const bucket = client.bucket({
@@ -31,7 +31,8 @@ function MapContainer() {
       console.log(error)
     });
   }, []);
-
+  
+  
   // MAP FROM MAPBOX
   const mapElement = useRef(null)
   Mapbox.accessToken = process.env.MAPBOX_API_KEY;
@@ -46,6 +47,31 @@ function MapContainer() {
       zoom: 3,
       pitch: 40,
     })
+    // RENDER MARKERS FROM COSMIC METADATA
+    pageData.objects.map( marker => {
+
+      let Popup = document.createElement('div')
+      Popup.style.width = '20px';
+      Popup.style.height = '30px';
+      Popup.style.backgroundColor = 'yellow';
+
+      const longitude = marker.metadata.longitude
+      const latitude = marker.metadata.latitude
+      const newMarker = new Mapbox.Marker()
+        newMarker.setLngLat([longitude, latitude])
+        newMarker.setPopup(new Mapbox.Popup)
+        newMarker.addTo(map)
+    })
+
+    // RENDER POP UP ON CLICK
+    // pageData.objects.forEach( popup => {
+    //   let popup = document.createElement('div');
+    //   popup.style.width = '20px';
+    //   popup.style.height = '30px';
+    //   popup.style.backgroundColor = 'yellow';
+      
+    // });
+    
 
     // NAVIGATION CONTROLS
     map.addControl(new Mapbox.NavigationControl());
@@ -81,15 +107,18 @@ function MapContainer() {
       )
   }
 
+  
+
   const renderPage = () => {
     return(
       <>
-        <MapWrapper />
-        <h1>{pageData.title}</h1>
+        <MapWrapper>
         <div style={{height: '70%', width: '90%'}} ref={mapElement}></div>
+        </MapWrapper>
       </>
     )
   }
+
   return(
     <>
       {(pageData === null) ? renderSkeleton() : renderPage()}

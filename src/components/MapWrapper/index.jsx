@@ -7,13 +7,13 @@ const MapWrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Rakkas', cursive;
+  font-family: 'Raleway', cursive;
   /* background-color: #193620; */
 
   h1 {
     font-size: 4rem;
     margin: 8rem 0 1rem 0;
-    color: #193620;
+    color: #202124;
   }
 
   section {
@@ -32,26 +32,26 @@ const MapWrapper = styled.section`
     padding: .1rem;
     border: .1rem solid #193620;
     border-radius: .2rem;
-    font-family: 'Rakkas', cursive;
+    font-family: 'Raleway', sans-serif;
     letter-spacing: .07rem;
     text-decoration: none;
     font-size: .7rem;
     text-transform: uppercase;
     text-align: center;
     transition: ease .2s;
-    color: #193620;
-    background-color: rgba(0,0,0,0);
+    color: #202124;
+    background-color: rgba(32,33,36);
     cursor: pointer;
   }
 
   .navButtons:hover {
-    color: #ffffff;
-    background-color: #193620;
+    color: #38eaed;
+    background-color: #202124;
     margin-top: .1rem;
   }
 
   div {
-    border-radius: 1rem;
+    border-radius: .35rem;
     box-shadow: 0px 4px 30px 3px rgba(0,0,0,0.2);
     }
 

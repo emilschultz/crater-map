@@ -19,8 +19,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: sans-serif;
+    font-family: 'Raleway', sans-serif;
     display: flex;
+    /* flex-direction: column; */
     justify-content: center;
   }
 `
