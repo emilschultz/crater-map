@@ -8,12 +8,12 @@ const TitleSection = styled.section`
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: #193620;
-  color: #f2361c;
-  font-family: 'Rakkas', cursive;
+  background-color: #F2F4F7;
+  color: #202124;
+  font-family: 'Raleway', cursive;
 
   h1 {
-    font-size: 6rem;
+    font-size: 4rem;
     margin: 0;
   }
 
@@ -25,7 +25,7 @@ const TitleSection = styled.section`
   }
 
   p {
-    font-size: 1.4rem;
+    font-size: 1rem;
     }
 
   a {

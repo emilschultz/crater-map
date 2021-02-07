@@ -26,7 +26,6 @@ function HomeContainer() {
       })
       .then(data => {
         setPageData(data.object);
-        console.log(data)
       })
       .catch(error => {
         console.log(error)
@@ -55,7 +54,7 @@ function HomeContainer() {
 
   return (
     <>
-      <GlobalStyle/>
+      {/* <GlobalStyle/> */}
       {(pageData === null) ? renderSkeleton() : renderPage()}
     </>
   )
