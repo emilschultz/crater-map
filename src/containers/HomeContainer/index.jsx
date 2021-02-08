@@ -3,7 +3,6 @@ import Cosmic from 'cosmicjs';
 // COMPONENTS IMPORT
 import SkeletonComponent from '../../components/SkeletonComponent'
 // STYLES IMPORT
-import GlobalStyle from '../../components/GlobalStyle';
 import TitleSection from '../../components/TitleSection';
 
 function HomeContainer() {
