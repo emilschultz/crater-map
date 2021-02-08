@@ -8,7 +8,7 @@ import MapWrapper from '../../components/MapWrapper';
 let map = null;
 
 function MapContainer() {
-  const [pageData, setPageData] = useState(null);
+  const [mapData, setMapData] = useState(null);
 
   // MARKERS FROM COSMIC
   useEffect(() => {
@@ -24,7 +24,7 @@ function MapContainer() {
       props: 'slug,title,content,metadata'
     })
     .then(data => {
-      setPageData(data)
+      setMapData(data)
       console.log(data)
     })
     .catch(error => {
@@ -38,17 +38,17 @@ function MapContainer() {
   Mapbox.accessToken = process.env.MAPBOX_API_KEY;
 
   useEffect(() => {
-    if(pageData !== null) {
+    if(mapData !== null) {
     map = new Mapbox.Map({
       attributionControl: false,
       container: mapElement.current,
       style: 'mapbox://styles/mapbox/satellite-v9',
-      center: [10.13980512713666, 53.39893116868396],
-      zoom: 3,
+      center: [-29.035194836132035, 0.28925621258486983],
+      zoom: 1.5,
       pitch: 40,
     })
     // RENDER MARKERS FROM COSMIC METADATA
-    pageData.objects.map( marker => {
+    mapData.objects.map( marker => {
 
       // let popup = document.createElement('div');
       // popup.className = 'popdenop';
@@ -58,13 +58,22 @@ function MapContainer() {
 
       const longitude = marker.metadata.longitude
       const latitude = marker.metadata.latitude
+      const popup = marker.content
       const newMarker = new Mapbox.Marker()
+        newMarker.setLngLat([longitude, latitude])
+        newMarker.addTo(map)
+
+        let popupContent = new Mapbox.Popup()
         .setLngLat([longitude, latitude])
-        .addTo(map)
+        .setHTML(popup)
+        .addTo(map)  
+        
+        popupContent.style.backgroundColor = 'black'
+
     })
 
-    // RENDER POP UP ON CLICK
-    // pageData.objects.forEach( popup => {
+    // RENDER POP UP
+    // mapData.objects.forEach( popup => {
     //   let popup = document.createElement('div');
     //   popup.style.width = '20px';
     //   popup.style.height = '30px';
@@ -99,7 +108,7 @@ function MapContainer() {
     });
       
   }
-}, [pageData])
+}, [mapData])
 
   const renderSkeleton = () => {
     return(
@@ -121,7 +130,7 @@ function MapContainer() {
 
   return(
     <>
-      {(pageData === null) ? renderSkeleton() : renderPage()}
+      {(mapData === null) ? renderSkeleton() : renderPage()}
     </>
   )
 
