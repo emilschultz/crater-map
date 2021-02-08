@@ -58,17 +58,17 @@ function MapContainer() {
 
       const longitude = marker.metadata.longitude
       const latitude = marker.metadata.latitude
+      const popupTitle = marker.title
       const popup = marker.content
       const newMarker = new Mapbox.Marker()
         newMarker.setLngLat([longitude, latitude])
         newMarker.addTo(map)
 
-        let popupContent = new Mapbox.Popup()
+        new Mapbox.Popup()
         .setLngLat([longitude, latitude])
-        .setHTML(popup)
+        .setHTML(popupTitle, popup)
         .addTo(map)  
         
-        popupContent.style.backgroundColor = 'black'
 
     })
 

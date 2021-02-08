@@ -22,7 +22,7 @@ function Asteroids () {
       type: 'bar'
     };
     // Browse the overall Asteroid data-set
-    fetch('https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=' + process.env.NASA_API_KEY)
+    fetch('https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=7fX5ch29dBRLQKQVxaI7twG9p1ZVmeNY1dSVaSsg')
     .then(response => response.json())
     .then(data => {
       data.near_earth_objects.forEach(object => {
@@ -36,8 +36,6 @@ function Asteroids () {
       }
   
       setBarChartState(newBarChartState);
-      // console.log(data)
-
     })
     .catch(error => {
       console.log(error)
@@ -46,14 +44,13 @@ function Asteroids () {
 
     // -------------------------------------------------------------------
 
-    // NEAR EARTH OBJECTS BASED ON THEIR CLOSEST APPROACH DATE TO EARTH
-
+    // ASTEROIDS NEAREST EARTH TODAY
     const [ bubbleChartState, setBubbleChartState ] = useState({
       data: [],
       layout: {
         width: 920,
         height: 540,
-        title: 'Near earth objects, based on their approach date to earth'
+        title: 'Asteroids nearest earth today'
       },
       frames: [],
       config: {}
@@ -77,25 +74,30 @@ function Asteroids () {
 
       today = yyyy + '-' + mm + '-' + dd;
 
-
-      fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=' + today + '&end_date=' + today + '&api_key=' + process.env.NASA_API_KEY)
+      fetch('https://api.nasa.gov/neo/rest/v1/feed?start_date=' + today + '&end_date=' + today + '&api_key=7fX5ch29dBRLQKQVxaI7twG9p1ZVmeNY1dSVaSsg')
       .then(response => response.json())
       .then(data => {
-        console.log(data)
-        // data.near_earth_objects.forEach(object => {
-        //   console.log(object)
+        const values = Object.values(data.near_earth_objects)
+        console.log(values[0])
+        values[0].forEach(object => {
+
+          newBubbleChartData.x.push(object.close_approach_data.[0].close_approach_date_full)
+          newBubbleChartData.y.push(object.close_approach_data.[0].miss_distance.kilometers)
+          newBubbleChartData.marker.size.push(object.absolute_magnitude_h)
+
+          
         });
 
-      //   let newBubbleChartState = {
-      //     ...bubbleChartState,
-      //     data: [newBubbleChartData]
-      //   };
+        let newBubbleChartState = {
+          ...bubbleChartState,
+          data: [newBubbleChartData]
+        };
 
-      //   setBubbleChartState(newBubbleChartState);
-      // })
-      // .catch(error => {
-      //   console.log(error)
-      // })
+        setBubbleChartState(newBubbleChartState);
+      })
+      .catch(error => {
+        console.log(error)
+      })
     }, [])
 
 
@@ -112,6 +114,15 @@ function Asteroids () {
         config={barChartState.config}
         onInitialized={(figure) => setBarChartState(figure)}
         onUpdate={(figure) => setBarChartState(figure)}
+        />
+        
+        <Plot
+        data={bubbleChartState.data}
+        layout={bubbleChartState.layout}
+        frames={bubbleChartState.frames}
+        config={bubbleChartState.config}
+        onInitialized={(figure) => setbubbleChartState(figure)}
+        onUpdate={(figure) => setbubbleChartState(figure)}
         />
 
       </section>
