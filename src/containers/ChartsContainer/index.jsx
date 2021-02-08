@@ -19,7 +19,10 @@ function Asteroids () {
     let newBarChartData = {
       x: [],
       y: [],
-      type: 'bar'
+      type: 'bar',
+      marker: {
+        color: ['#00b894', '#e17055', '#0984e3', '#fab1a0', '#e84393', '#ffeaa7', '#6c5ce7', '#ff7675',   '#fd79a8', '#fdcb6e', '#00cec9', '#d63031', '#e84393', '#a29bfe', '#00b894', '#e17055', '#0984e3', '#fab1a0', '#e84393', '#ffeaa7', '#6c5ce7', '#ff7675',   '#fd79a8']
+      }
     };
     // Browse the overall Asteroid data-set
     fetch('https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=7fX5ch29dBRLQKQVxaI7twG9p1ZVmeNY1dSVaSsg')
@@ -29,6 +32,7 @@ function Asteroids () {
         // console.log(object)
         newBarChartData.x.push(object.name_limited)
         newBarChartData.y.push(object.estimated_diameter.kilometers.estimated_diameter_max)
+        
       });
       let newBarChartState = {
         ...barChartState,
@@ -60,9 +64,12 @@ function Asteroids () {
       let newBubbleChartData = {
         x: [],
         y: [],
+        text: [],
         mode: 'markers',
         marker: {
-          size: []
+          size: [],
+          color: ['#00b894', '#e17055', '#0984e3', '#fab1a0', '#e84393', '#ffeaa7', '#6c5ce7', '#ff7675', '#fd79a8', '#fdcb6e', '#00cec9', '#d63031', '#e84393', '#a29bfe'],
+
         }
       };
 
@@ -80,12 +87,11 @@ function Asteroids () {
         const values = Object.values(data.near_earth_objects)
         console.log(values[0])
         values[0].forEach(object => {
-
           newBubbleChartData.x.push(object.close_approach_data.[0].close_approach_date_full)
           newBubbleChartData.y.push(object.close_approach_data.[0].miss_distance.kilometers)
-          newBubbleChartData.marker.size.push(object.absolute_magnitude_h)
-
-          
+          newBubbleChartData.marker.size.push(object.estimated_diameter.meters.estimated_diameter_min * 0.7)
+          // newBubbleChartData.marker.size.push(object.absolute_magnitude_h)
+          newBubbleChartData.text.push()
         });
 
         let newBubbleChartState = {
