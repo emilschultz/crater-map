@@ -4,6 +4,7 @@ import Mapbox, { Popup } from 'mapbox-gl';
 
 import SkeletonComponent from '../../components/SkeletonComponent';
 import MapWrapper from '../../components/MapWrapper';
+import TitleSection from '../../components/TitleSection';
 
 let map = null;
 
@@ -47,40 +48,38 @@ function MapContainer() {
       zoom: 1.5,
       pitch: 40,
     })
+
     // RENDER MARKERS FROM COSMIC METADATA
     mapData.objects.map( marker => {
 
-      // let popup = document.createElement('div');
-      // popup.className = 'popdenop';
-      // newMarker.style.width = '20px';
-      // newMarker.style.height = '30px';
-      // newMarker.style.backgroundColor = 'yellow';
-
       const longitude = marker.metadata.longitude
       const latitude = marker.metadata.latitude
-      const popupTitle = marker.title
-      const popup = marker.content
-      const newMarker = new Mapbox.Marker()
-        newMarker.setLngLat([longitude, latitude])
-        newMarker.addTo(map)
+      const title = marker.title
+      const content = marker.content
+      // const pin = marker.metadata.icon.url
 
-        new Mapbox.Popup()
-        .setLngLat([longitude, latitude])
-        .setHTML(popupTitle, popup)
-        .addTo(map)  
-        
+        let popupContent = `
+        <div>
+          <h2>${title}</h2>
+          <p>${content}</p>
+        </div>
+        `
 
+        new Mapbox.Marker()
+          
+          .setLngLat([longitude, latitude])
+          .flyTo([longitude, latitude])
+          .setPopup(new Mapbox.Popup()
+            .setHTML(popupContent))
+          .addTo(map)
     })
 
-    // RENDER POP UP
-    // mapData.objects.forEach( popup => {
-    //   let popup = document.createElement('div');
-    //   popup.style.width = '20px';
-    //   popup.style.height = '30px';
-    //   popup.style.backgroundColor = 'yellow';
-      
-    // });
-    
+    // BUTTON FOR EACH MARKER
+    mapData.objects.forEach( marker => {
+      return(
+      <button>{marker.title}</button>
+      )
+    })
 
     // NAVIGATION CONTROLS
     map.addControl(new Mapbox.NavigationControl());
@@ -94,7 +93,7 @@ function MapContainer() {
       'maxzoom': 14
       });
       // TERRAIN LAYER
-      map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 2 });
+      map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
       // SKY LAYER
       map.addLayer({
       'id': 'sky',
@@ -106,7 +105,6 @@ function MapContainer() {
       }
       });
     });
-      
   }
 }, [mapData])
 
@@ -115,8 +113,6 @@ function MapContainer() {
       <SkeletonComponent />  
       )
   }
-
-  
 
   const renderPage = () => {
     return(

@@ -53,7 +53,7 @@ function Asteroids () {
       data: [],
       layout: {
         width: 920,
-        height: 540,
+        height: 920,
         title: 'Asteroids nearest earth today'
       },
       frames: [],
@@ -89,10 +89,10 @@ function Asteroids () {
         values[0].forEach(object => {
           newBubbleChartData.x.push(object.close_approach_data.[0].close_approach_date_full)
           newBubbleChartData.y.push(object.close_approach_data.[0].miss_distance.kilometers)
-          newBubbleChartData.marker.size.push(object.estimated_diameter.meters.estimated_diameter_min * 0.7)
-          // newBubbleChartData.marker.size.push(object.absolute_magnitude_h)
-          newBubbleChartData.text.push()
+          newBubbleChartData.marker.size.push(object.estimated_diameter.meters.estimated_diameter_min * 0.5)
+          newBubbleChartData.text.push(object.close_approach_data.[0].close_approach_date_full)
         });
+
 
         let newBubbleChartState = {
           ...bubbleChartState,
