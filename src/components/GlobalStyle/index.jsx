@@ -22,7 +22,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Raleway', sans-serif;
     display: flex;
-    /* flex-direction: column; */
     justify-content: center;
   }
 `

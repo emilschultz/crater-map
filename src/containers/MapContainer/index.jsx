@@ -49,24 +49,27 @@ function MapContainer() {
     // NAVIGATION CONTROLS
     map.addControl(new Mapbox.NavigationControl());
 
+    // DISABLE SCROLL ZOOM
+    map.scrollZoom.disable();
+
     // 3D LAYER
     map.on('load', function () {
       map.addSource('mapbox-dem', {
       'type': 'raster-dem',
       'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
-      'tileSize': 1024,
+      'tileSize': 512,
       'maxzoom': 14
       });
       // TERRAIN LAYER
-      map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+      map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.6 });
       // SKY LAYER
       map.addLayer({
       'id': 'sky',
       'type': 'sky',
       'paint': {
       'sky-type': 'atmosphere',
-      'sky-atmosphere-sun': [0.0, 0.0],
-      'sky-atmosphere-sun-intensity': 15
+      'sky-atmosphere-sun': [0.0, 70.0],
+      'sky-atmosphere-sun-intensity': 30
       }
       });
     });
@@ -94,7 +97,9 @@ function MapContainer() {
         customMarker.addEventListener('click', () => {
           map.flyTo({
             center: [longitude, latitude],
-            zoom: 12
+            zoom: 12,
+            speed: .8,
+            curve: .8
           })
         })
 
@@ -126,7 +131,7 @@ function MapContainer() {
     return(
       <>
         <MapWrapper>
-        <div style={{height: '75%', width: '90%'}} ref={mapElement}></div>
+        <div style={{height: '95%', width: '100%'}} ref={mapElement}></div>
         </MapWrapper>
       </>
     )
