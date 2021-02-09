@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Cosmic from 'cosmicjs';
-// COMPONENTS IMPORT
+
 import SkeletonComponent from '../../components/SkeletonComponent'
-// STYLES IMPORT
+
 import TitleSection from '../../components/TitleSection';
 
 function HomeContainer() {
@@ -53,7 +53,6 @@ function HomeContainer() {
 
   return (
     <>
-      {/* <GlobalStyle/> */}
       {(pageData === null) ? renderSkeleton() : renderPage()}
     </>
   )

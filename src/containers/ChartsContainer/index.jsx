@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 
+const nasaApiKey = process.env.NASA_API_KEY;
+
 function Asteroids () {
 
   // BAR CHART - SOME KNOWN ASTEROIDS AND THEIR DIAMETER IN KILOMETERS
@@ -25,7 +27,7 @@ function Asteroids () {
       }
     };
     // Browse the overall Asteroid data-set
-    fetch('https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=7fX5ch29dBRLQKQVxaI7twG9p1ZVmeNY1dSVaSsg')
+    fetch(`https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${nasaApiKey}`)
     .then(response => response.json())
     .then(data => {
       data.near_earth_objects.forEach(object => {
@@ -48,7 +50,7 @@ function Asteroids () {
 
     // -------------------------------------------------------------------
 
-    // ASTEROIDS NEAREST EARTH TODAY
+    // BUBBLE CHART ASTEROIDS NEAREST EARTH TODAY
     const [ bubbleChartState, setBubbleChartState ] = useState({
       data: [],
       layout: {
@@ -85,7 +87,6 @@ function Asteroids () {
       .then(response => response.json())
       .then(data => {
         const values = Object.values(data.near_earth_objects)
-        console.log(values[0])
         values[0].forEach(object => {
           newBubbleChartData.x.push(object.close_approach_data.[0].close_approach_date_full)
           newBubbleChartData.y.push(object.close_approach_data.[0].miss_distance.kilometers)
