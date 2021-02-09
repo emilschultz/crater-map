@@ -4,7 +4,6 @@ import Mapbox, { Popup } from 'mapbox-gl';
 
 import SkeletonComponent from '../../components/SkeletonComponent';
 import MapWrapper from '../../components/MapWrapper';
-import TitleSection from '../../components/TitleSection';
 
 let map = null;
 
@@ -26,13 +25,11 @@ function MapContainer() {
     })
     .then(data => {
       setMapData(data)
-      console.log(data)
     })
     .catch(error => {
       console.log(error)
     });
   }, []);
-  
   
   // MAP FROM MAPBOX
   const mapElement = useRef(null)
@@ -47,38 +44,6 @@ function MapContainer() {
       center: [-29.035194836132035, 0.28925621258486983],
       zoom: 1.5,
       pitch: 40,
-    })
-
-    // RENDER MARKERS FROM COSMIC METADATA
-    mapData.objects.map( marker => {
-
-      const longitude = marker.metadata.longitude
-      const latitude = marker.metadata.latitude
-      const title = marker.title
-      const content = marker.content
-      // const pin = marker.metadata.icon.url
-
-        let popupContent = `
-        <div>
-          <h2>${title}</h2>
-          <p>${content}</p>
-        </div>
-        `
-
-        new Mapbox.Marker()
-          
-          .setLngLat([longitude, latitude])
-          .flyTo([longitude, latitude])
-          .setPopup(new Mapbox.Popup()
-            .setHTML(popupContent))
-          .addTo(map)
-    })
-
-    // BUTTON FOR EACH MARKER
-    mapData.objects.forEach( marker => {
-      return(
-      <button>{marker.title}</button>
-      )
     })
 
     // NAVIGATION CONTROLS
@@ -105,8 +70,43 @@ function MapContainer() {
       }
       });
     });
+
+    // RENDER MARKERS FROM COSMIC DATA
+    mapData.objects.map( marker => {
+
+      const longitude = marker.metadata.longitude
+      const latitude = marker.metadata.latitude
+      const title = marker.title
+      const content = marker.content
+      const markerImage = marker.metadata.icon.url
+
+        // CUSTOM MARKER
+        let customMarker = document.createElement('div');
+        customMarker.className = 'customMarker';
+        customMarker.style.backgroundImage = `url(${markerImage})`
+        customMarker.style.backgroundSize = '40px'
+        customMarker.style.width = '40px';
+        customMarker.style.height = '40px';
+        customMarker.style.display = 'block';
+        customMarker.style.cursor = 'pointer';
+
+        // THE POPUP
+        let popupContent = `
+        <div>
+          <h2>${title}</h2>
+          <p>${content}</p>
+        </div>
+        `
+        const popup = new Mapbox.Popup().setHTML(popupContent)
+        new Mapbox.Marker(customMarker, {
+          anchor: 'bottom-right'
+        })
+          .setLngLat([longitude, latitude])
+          .setPopup(popup)
+          .addTo(map)
+    })
   }
-}, [mapData])
+}, [mapData]);
 
   const renderSkeleton = () => {
     return(
@@ -118,7 +118,7 @@ function MapContainer() {
     return(
       <>
         <MapWrapper>
-        <div style={{height: '70%', width: '90%'}} ref={mapElement}></div>
+        <div style={{height: '75%', width: '90%'}} ref={mapElement}></div>
         </MapWrapper>
       </>
     )
@@ -130,7 +130,6 @@ function MapContainer() {
     </>
   )
 
-  
 }
 
 export default MapContainer;
