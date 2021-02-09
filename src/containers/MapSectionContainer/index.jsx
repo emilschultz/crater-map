@@ -3,7 +3,8 @@ import Cosmic from 'cosmicjs';
 
 import SkeletonComponent from '../../components/SkeletonComponent';
 import MapContainer from '../MapContainer';
-import Heading from '../../components/Heading';
+import ContentSection from '../../components/ContentSection';
+
 function MapSectionContainer() {
   const [mapSectionData, setMapSectionData] = useState(null);
 
@@ -27,9 +28,6 @@ function MapSectionContainer() {
     });
   }, []);
 
-
-
-
   const renderSkeleton = () => {
     return(
       <SkeletonComponent />  
@@ -39,7 +37,10 @@ function MapSectionContainer() {
   const renderPage = () => {
     return(
       <>
-          <Heading>{mapSectionData.title}</Heading>
+          <ContentSection>
+            <h1>{mapSectionData.title}</h1>
+            <div dangerouslySetInnerHTML={{__html: mapSectionData.content}} />
+          </ContentSection>
       </>
     )
   }
