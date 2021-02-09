@@ -90,6 +90,14 @@ function MapContainer() {
         customMarker.style.display = 'block';
         customMarker.style.cursor = 'pointer';
 
+        // FLT TO MARKER LOCATION
+        customMarker.addEventListener('click', () => {
+          map.flyTo({
+            center: [longitude, latitude],
+            zoom: 12
+          })
+        })
+
         // THE POPUP
         let popupContent = `
         <div>
@@ -99,7 +107,7 @@ function MapContainer() {
         `
         const popup = new Mapbox.Popup().setHTML(popupContent)
         new Mapbox.Marker(customMarker, {
-          anchor: 'bottom-right'
+          anchor: 'bottom'
         })
           .setLngLat([longitude, latitude])
           .setPopup(popup)

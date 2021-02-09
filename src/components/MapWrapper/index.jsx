@@ -51,7 +51,6 @@ const MapWrapper = styled.section`
   }
 
   div {
-    border-radius: .35rem;
     box-shadow: 0px 4px 30px 3px rgba(0,0,0,0.2);
     }
 
