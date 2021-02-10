@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 
+import ChartSection from '../../components/ChartSection';
+
 const nasaApiKey = process.env.NASA_API_KEY;
 
 function Asteroids () {
@@ -11,7 +13,38 @@ function Asteroids () {
     layout: {
       width: 920,
       height: 640,
-      title: 'Known Asteroids and their diameter in kilometers'
+      plot_bgcolor:'rgb(0, 0, 0)',
+      paper_bgcolor:'rgb(0, 0, 0)',
+      title: {
+        text: 'Known Asteroids and their diameter in kilometers',
+        font: {
+          family: 'Arial',
+          size: 24,
+          color: 'rgb(200, 100, 40)'
+        }
+      },
+      xaxis: {
+        title: {
+          text: 'ASTEROID NAME',
+          font: {
+            family: 'ARIAL',
+            size: 14,
+            color: 'rgb(200, 100, 40)'
+          }
+        },
+        color: "rgb(200, 100, 40)",
+      },
+      yaxis: {
+        title: {
+          text: 'DIAMETER IN KILOMETERS',
+          font: {
+            family: 'ARIAL',
+            size: 14,
+          }
+        },
+        color: 'rgb(200, 100, 40)'
+
+      }
     },
     frames: [],
     config: {}
@@ -23,7 +56,7 @@ function Asteroids () {
       y: [],
       type: 'bar',
       marker: {
-        color: ['#00b894', '#e17055', '#0984e3', '#fab1a0', '#e84393', '#ffeaa7', '#6c5ce7', '#ff7675',   '#fd79a8', '#fdcb6e', '#00cec9', '#d63031', '#e84393', '#a29bfe', '#00b894', '#e17055', '#0984e3', '#fab1a0', '#e84393', '#ffeaa7', '#6c5ce7', '#ff7675',   '#fd79a8']
+        color: ['#FF8E00', '#E54818', '#FF7F00', '#FF551B', '#FF8E00', '#FF6702', '#FF8E00', '#E54818', '#FF7F00', '#FF551B', '#FF8E00', '#FF6702', '#FF8E00', '#E54818', '#FF7F00', '#FF551B', '#FF8E00', '#FF6702', '#FF8E00', '#E54818', '#FF7F00', '#FF551B', '#FF8E00', '#FF6702'],
       }
     };
     // Browse the overall Asteroid data-set
@@ -56,7 +89,39 @@ function Asteroids () {
       layout: {
         width: 920,
         height: 920,
-        title: 'Asteroids nearest earth today'
+        plot_bgcolor:'rgb(0, 0, 0)',
+        paper_bgcolor:'rgb(0, 0, 0)',
+        
+        title: {
+          text: 'Asteroids nearest earth today',
+          font: {
+            family: 'Arial',
+            size: 24,
+            color: 'rgb(200, 100, 40)'
+          }
+        },
+        xaxis: {
+          title: {
+            margin: 50,
+            text: 'TIMESTAMP',
+            font: {
+              family: 'Arial',
+              size: 14,
+              color: 'rgb(200, 100, 40)'
+            }
+          },
+          color: 'rgb(200, 100, 40)',
+        },
+        yaxis: {
+          title: {
+            text: 'MISS DISTANCE IN KILOMETERS',
+            font: {
+              family: 'Arial',
+              size: 14,
+            }
+          },
+          color: 'rgb(200, 100, 40)'
+        }
       },
       frames: [],
       config: {}
@@ -70,7 +135,7 @@ function Asteroids () {
         mode: 'markers',
         marker: {
           size: [],
-          color: ['#00b894', '#e17055', '#0984e3', '#fab1a0', '#e84393', '#ffeaa7', '#6c5ce7', '#ff7675', '#fd79a8', '#fdcb6e', '#00cec9', '#d63031', '#e84393', '#a29bfe'],
+          color: ['#FF8E00', '#E54818', '#FF7F00', '#FF551B', '#FF8E00', '#FF6702', '#FF8E00', '#E54818', '#FF7F00', '#FF551B', '#FF8E00', '#FF6702', '#FF8E00', '#E54818', '#FF7F00', '#FF551B', '#FF8E00', '#FF6702']
 
         }
       };
@@ -107,7 +172,7 @@ function Asteroids () {
     }, [])
 
     return(
-      <section>
+      <ChartSection>
 
         <Plot
         data={barChartState.data}
@@ -117,7 +182,7 @@ function Asteroids () {
         onInitialized={(figure) => setBarChartState(figure)}
         onUpdate={(figure) => setBarChartState(figure)}
         />
-        
+
         <Plot
         data={bubbleChartState.data}
         layout={bubbleChartState.layout}
@@ -127,7 +192,7 @@ function Asteroids () {
         onUpdate={(figure) => setbubbleChartState(figure)}
         />
 
-      </section>
+      </ChartSection>
     )
 }
 
