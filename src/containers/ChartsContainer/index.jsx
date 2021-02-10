@@ -94,7 +94,6 @@ function Asteroids () {
           newBubbleChartData.text.push(object.close_approach_data.[0].close_approach_date_full)
         });
 
-
         let newBubbleChartState = {
           ...bubbleChartState,
           data: [newBubbleChartData]
@@ -106,10 +105,6 @@ function Asteroids () {
         console.log(error)
       })
     }, [])
-
-
-
-
 
     return(
       <section>
@@ -133,9 +128,7 @@ function Asteroids () {
         />
 
       </section>
-    
     )
 }
-
 
 export default Asteroids;

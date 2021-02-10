@@ -86,7 +86,6 @@ function MapContainer() {
 
         // CUSTOM MARKER
         let customMarker = document.createElement('div');
-        customMarker.className = 'customMarker';
         customMarker.style.backgroundImage = `url(${markerImage})`
         customMarker.style.backgroundSize = '40px'
         customMarker.style.width = '40px';
@@ -105,7 +104,6 @@ function MapContainer() {
         })
 
         // THE POPUP
-        
         let popupContent = `
           <h2>${title}</h2>
           <p>${content}</p>
@@ -117,8 +115,6 @@ function MapContainer() {
           .setLngLat([longitude, latitude])
           .setPopup(popup)
           .addTo(map)
-          
-
     })    
   }
 }, [mapData]);

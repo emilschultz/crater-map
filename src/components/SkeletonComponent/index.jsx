@@ -1,13 +1,13 @@
 import React from 'react';
 
+import SkeletonStyle from '../SkeletonStyle';
+import Heading from '../Heading';
+
 const SkeletonComponent = () => {
   return(
-      <div style={{
-        height: '800px',
-        backgroundColor: '#e5e5e5',
-        marginTop: '115px',
-        }}>
-      </div>
+      <SkeletonStyle>
+        <h1>Loading...</h1>
+      </SkeletonStyle>
   )
 }
 

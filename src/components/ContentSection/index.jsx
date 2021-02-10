@@ -8,7 +8,7 @@ const ContenSection = styled.section`
   justify-content: flex-end;
   align-items: flex-end;
   background-color: rgb(220, 100, 40);
-  color: #fafafa;
+  color: #000000;
   padding: .6rem;
   
 
