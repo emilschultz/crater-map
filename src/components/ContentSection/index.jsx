@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ContenSection = styled.section`
-  height: 100vh;
+  height: 110vh;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@ const ContenSection = styled.section`
     display: flex;
     text-align: justify;
     justify-content: flex-end;
-    margin: 0;
+    margin: 0 0 5rem 0;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
     text-transform: uppercase;

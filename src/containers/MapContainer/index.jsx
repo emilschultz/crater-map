@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cosmic from 'cosmicjs';
-import Mapbox, { Popup } from 'mapbox-gl';
+import Mapbox from 'mapbox-gl';
 
 import SkeletonComponent from '../../components/SkeletonComponent';
 import MapWrapper from '../../components/MapWrapper';
@@ -44,6 +44,7 @@ function MapContainer() {
       center: [-29.035194836132035, 0.28925621258486983],
       zoom: 2,
       pitch: 40,
+      minZoom: 2
     })
 
     // NAVIGATION CONTROLS
@@ -84,7 +85,7 @@ function MapContainer() {
       const markerImage = marker.metadata.icon.url
 
         // CUSTOM MARKER
-        let customMarker = document.createElement('wrapper');
+        let customMarker = document.createElement('div');
         customMarker.className = 'customMarker';
         customMarker.style.backgroundImage = `url(${markerImage})`
         customMarker.style.backgroundSize = '40px'
@@ -104,6 +105,7 @@ function MapContainer() {
         })
 
         // THE POPUP
+        
         let popupContent = `
           <h2>${title}</h2>
           <p>${content}</p>
@@ -115,9 +117,17 @@ function MapContainer() {
           .setLngLat([longitude, latitude])
           .setPopup(popup)
           .addTo(map)
-    })
+          
+
+    })    
   }
 }, [mapData]);
+
+  function test(mapData) {
+    return(
+      <button>zoom out</button>
+    )
+  }
 
   const renderSkeleton = () => {
     return(
@@ -131,7 +141,6 @@ function MapContainer() {
         <MapWrapper>
         
           {/* <button>YO</button>
-          <button>YO</button>
           <button>YO</button>
           <button>YO</button>
           <button>YO</button>
