@@ -42,7 +42,7 @@ function MapContainer() {
       container: mapElement.current,
       style: 'mapbox://styles/mapbox/satellite-v9',
       center: [-29.035194836132035, 0.28925621258486983],
-      zoom: 1.5,
+      zoom: 2,
       pitch: 40,
     })
 
@@ -68,8 +68,8 @@ function MapContainer() {
       'type': 'sky',
       'paint': {
       'sky-type': 'atmosphere',
-      'sky-atmosphere-sun': [0.0, 70.0],
-      'sky-atmosphere-sun-intensity': 30
+      'sky-atmosphere-sun': [0.0,.09],
+      'sky-atmosphere-sun-intensity': 90
       }
       });
     });
@@ -84,7 +84,7 @@ function MapContainer() {
       const markerImage = marker.metadata.icon.url
 
         // CUSTOM MARKER
-        let customMarker = document.createElement('div');
+        let customMarker = document.createElement('wrapper');
         customMarker.className = 'customMarker';
         customMarker.style.backgroundImage = `url(${markerImage})`
         customMarker.style.backgroundSize = '40px'
@@ -94,7 +94,7 @@ function MapContainer() {
         customMarker.style.cursor = 'pointer';
 
         // FLT TO MARKER LOCATION
-        customMarker.addEventListener('click', () => {
+          customMarker.addEventListener('click', () => {
           map.flyTo({
             center: [longitude, latitude],
             zoom: 12,
@@ -105,10 +105,8 @@ function MapContainer() {
 
         // THE POPUP
         let popupContent = `
-        <div>
           <h2>${title}</h2>
           <p>${content}</p>
-        </div>
         `
         const popup = new Mapbox.Popup().setHTML(popupContent)
         new Mapbox.Marker(customMarker, {
@@ -131,7 +129,15 @@ function MapContainer() {
     return(
       <>
         <MapWrapper>
-        <div style={{height: '95%', width: '100%'}} ref={mapElement}></div>
+        
+          {/* <button>YO</button>
+          <button>YO</button>
+          <button>YO</button>
+          <button>YO</button>
+          <button>YO</button>
+          <button>YO</button> */}
+        
+        <div style={{height: '100%', width: '100%'}} ref={mapElement}></div>
         </MapWrapper>
       </>
     )
