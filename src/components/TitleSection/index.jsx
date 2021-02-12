@@ -5,33 +5,30 @@ const TitleSection = styled.section`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  background-color: #F2F4F7;
-  color: #202124;
-  font-family: 'Raleway', cursive;
+  align-content: center;
+  background-color: rgb(220, 100, 40);
+  color: #000000;
+  
 
   h1 {
-    font-size: 4rem;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 8rem;
+    font-weight: 400;
+    font-style: italic;
     margin: 0;
+    text-transform: uppercase;
+    letter-spacing: .5rem
   }
 
   div {
-    width:50%;
+    width: 75%;
     display: flex;
-    justify-content: center;
     text-align: justify;
-  }
-
-  p {
-    font-size: 1rem;
-    }
-
-  a {
-    font-size: 2.5rem;
-    cursor: pointer;
-    padding: 1rem;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    text-transform: uppercase;
   }
 `;
 

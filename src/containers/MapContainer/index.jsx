@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Cosmic from 'cosmicjs';
-import Mapbox, { Popup } from 'mapbox-gl';
+import Mapbox from 'mapbox-gl';
 
 import SkeletonComponent from '../../components/SkeletonComponent';
 import MapWrapper from '../../components/MapWrapper';
@@ -42,31 +42,35 @@ function MapContainer() {
       container: mapElement.current,
       style: 'mapbox://styles/mapbox/satellite-v9',
       center: [-29.035194836132035, 0.28925621258486983],
-      zoom: 1.5,
+      zoom: 2,
       pitch: 40,
+      minZoom: 2
     })
 
     // NAVIGATION CONTROLS
     map.addControl(new Mapbox.NavigationControl());
+
+    // DISABLE SCROLL ZOOM
+    map.scrollZoom.disable();
 
     // 3D LAYER
     map.on('load', function () {
       map.addSource('mapbox-dem', {
       'type': 'raster-dem',
       'url': 'mapbox://mapbox.mapbox-terrain-dem-v1',
-      'tileSize': 1024,
+      'tileSize': 512,
       'maxzoom': 14
       });
       // TERRAIN LAYER
-      map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.5 });
+      map.setTerrain({ 'source': 'mapbox-dem', 'exaggeration': 1.6 });
       // SKY LAYER
       map.addLayer({
       'id': 'sky',
       'type': 'sky',
       'paint': {
       'sky-type': 'atmosphere',
-      'sky-atmosphere-sun': [0.0, 0.0],
-      'sky-atmosphere-sun-intensity': 15
+      'sky-atmosphere-sun': [0.0,.09],
+      'sky-atmosphere-sun-intensity': 90
       }
       });
     });
@@ -82,7 +86,6 @@ function MapContainer() {
 
         // CUSTOM MARKER
         let customMarker = document.createElement('div');
-        customMarker.className = 'customMarker';
         customMarker.style.backgroundImage = `url(${markerImage})`
         customMarker.style.backgroundSize = '40px'
         customMarker.style.width = '40px';
@@ -91,19 +94,19 @@ function MapContainer() {
         customMarker.style.cursor = 'pointer';
 
         // FLT TO MARKER LOCATION
-        customMarker.addEventListener('click', () => {
+          customMarker.addEventListener('click', () => {
           map.flyTo({
             center: [longitude, latitude],
-            zoom: 12
+            zoom: 12,
+            speed: .8,
+            curve: .8
           })
         })
 
         // THE POPUP
         let popupContent = `
-        <div>
           <h2>${title}</h2>
           <p>${content}</p>
-        </div>
         `
         const popup = new Mapbox.Popup().setHTML(popupContent)
         new Mapbox.Marker(customMarker, {
@@ -112,9 +115,15 @@ function MapContainer() {
           .setLngLat([longitude, latitude])
           .setPopup(popup)
           .addTo(map)
-    })
+    })    
   }
 }, [mapData]);
+
+  function test(mapData) {
+    return(
+      <button>zoom out</button>
+    )
+  }
 
   const renderSkeleton = () => {
     return(
@@ -126,7 +135,14 @@ function MapContainer() {
     return(
       <>
         <MapWrapper>
-        <div style={{height: '75%', width: '90%'}} ref={mapElement}></div>
+        
+          {/* <button>YO</button>
+          <button>YO</button>
+          <button>YO</button>
+          <button>YO</button>
+          <button>YO</button> */}
+        
+        <div style={{height: '100%', width: '100%'}} ref={mapElement}></div>
         </MapWrapper>
       </>
     )

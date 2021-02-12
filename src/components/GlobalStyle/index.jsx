@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
+    background-color: #000000;
   }
 
   html {
@@ -22,7 +23,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-family: 'Raleway', sans-serif;
     display: flex;
-    /* flex-direction: column; */
     justify-content: center;
   }
 `
