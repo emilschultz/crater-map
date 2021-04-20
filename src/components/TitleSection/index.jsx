@@ -9,7 +9,6 @@ const TitleSection = styled.section`
   align-content: center;
   background-color: rgb(220, 100, 40);
   color: #000000;
-  
 
   h1 {
     font-family: 'Times New Roman', Times, serif;

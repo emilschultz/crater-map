@@ -93,7 +93,7 @@ function MapContainer() {
         customMarker.style.display = 'block';
         customMarker.style.cursor = 'pointer';
 
-        // FLT TO MARKER LOCATION
+        // FLT TO MARKER LOCATION ON CLICK
           customMarker.addEventListener('click', () => {
           map.flyTo({
             center: [longitude, latitude],
@@ -119,12 +119,6 @@ function MapContainer() {
   }
 }, [mapData]);
 
-  function test(mapData) {
-    return(
-      <button>zoom out</button>
-    )
-  }
-
   const renderSkeleton = () => {
     return(
       <SkeletonComponent />  
@@ -135,13 +129,6 @@ function MapContainer() {
     return(
       <>
         <MapWrapper>
-        
-          {/* <button>YO</button>
-          <button>YO</button>
-          <button>YO</button>
-          <button>YO</button>
-          <button>YO</button> */}
-        
         <div style={{height: '100%', width: '100%'}} ref={mapElement}></div>
         </MapWrapper>
       </>
