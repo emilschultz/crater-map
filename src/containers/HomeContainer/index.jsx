@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Cosmic from 'cosmicjs';
 
 import SkeletonComponent from '../../components/SkeletonComponent'
-
 import TitleSection from '../../components/TitleSection';
 
 function HomeContainer() {

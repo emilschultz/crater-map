@@ -102,7 +102,6 @@ function Asteroids () {
         },
         xaxis: {
           title: {
-            margin: 50,
             text: 'TIMESTAMP',
             font: {
               family: 'Arial',

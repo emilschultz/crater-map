@@ -1,7 +1,5 @@
 import React from 'react';
-
 import SkeletonStyle from '../SkeletonStyle';
-import Heading from '../Heading';
 
 const SkeletonComponent = () => {
   return(
