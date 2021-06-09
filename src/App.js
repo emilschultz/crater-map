@@ -1,20 +1,22 @@
-import React from 'react';
+import React from "react";
 
-import GlobalStyle from './components/GlobalStyle/index';
+import GlobalStyle from "./components/GlobalStyle/index";
 
-import HomeContainer from './containers/HomeContainer';
-import MapSectionContainer from './containers/MapSectionContainer';
-import ChartsContainer from './containers/ChartsContainer';
+import HomeContainer from "./containers/HomeContainer";
+import MapSectionContainer from "./containers/MapSectionContainer";
+import ChartsContainer from "./containers/ChartsContainer";
+import ImageSliderContainer from "./containers/ImageSliderContainer";
 
 function App() {
-  return(
+  return (
     <>
       <GlobalStyle />
-        <HomeContainer />
-        <MapSectionContainer />
-        <ChartsContainer />
+      <HomeContainer />
+      <MapSectionContainer />
+      <ImageSliderContainer />
+      <ChartsContainer />
     </>
-  ) 
+  );
 }
 
 export default App;
