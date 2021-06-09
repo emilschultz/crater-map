@@ -1,59 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import Cosmic from 'cosmicjs';
+import React, { useState, useEffect } from "react";
+import Cosmic from "cosmicjs";
 
-import SkeletonComponent from '../../components/SkeletonComponent'
-import TitleSection from '../../components/TitleSection';
+import SkeletonComponent from "../../components/SkeletonComponent";
+import TitleSection from "../../components/TitleSection";
 
 function HomeContainer() {
-
   const [pageData, setPageData] = useState(null);
 
-// --------------------------------------------------------------------------------
+  // --------------------------------------------------------------------------------
 
-    // COSMIC
-    useEffect(() => {
-      const client = new Cosmic()
-      const bucket = client.bucket({
-        slug: process.env.BUCKET_SLUG,
-        read_key: process.env.READ_KEY
-      });
+  // COSMIC
+  useEffect(() => {
+    const client = new Cosmic();
+    const bucket = client.bucket({
+      slug: process.env.BUCKET_SLUG,
+      read_key: process.env.READ_KEY,
+    });
 
-      bucket.getObject({
-        slug: 'crater-map',
-        props: 'slug,title,content'
+    bucket
+      .getObject({
+        slug: "crater-map",
+        props: "slug,title,content",
       })
-      .then(data => {
+      .then((data) => {
         setPageData(data.object);
       })
-      .catch(error => {
-        console.log(error)
-      })
-    }, [])
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
-// --------------------------------------------------------------------------------
+  // --------------------------------------------------------------------------------
 
   const renderSkeleton = () => {
-    return(
-      <SkeletonComponent />  
-      )
-  }
-  
+    return <SkeletonComponent />;
+  };
+
   const renderPage = () => {
-    return(  
+    return (
       <>
         <TitleSection>
           <h1>{pageData.title}</h1>
-          <div dangerouslySetInnerHTML={{__html: pageData.content}} />
+          <div dangerouslySetInnerHTML={{ __html: pageData.content }} />
         </TitleSection>
       </>
-    ) 
-  }
+    );
+  };
 
-  return (
-    <>
-      {(pageData === null) ? renderSkeleton() : renderPage()}
-    </>
-  )
+  return <>{pageData === null ? renderSkeleton() : renderPage()}</>;
 }
 
 export default HomeContainer;
